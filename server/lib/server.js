@@ -9,8 +9,8 @@ var roomIdToRoom = new Map()
 wss.on('connection', function connection(ws, request) {
 
     ws.on('message', function incoming(message) {
-        console.log(request.url)
-        console.log('received: %s', message);
+        //console.log(request.url)
+        //console.log('received: %s', message);
         roomIdToRoom.get(request.url).sendToAll(message);
         //ws.send("connecté à : " + request.url)
     });
@@ -18,7 +18,7 @@ wss.on('connection', function connection(ws, request) {
     ws.on('close', () => {
         if (roomIdToRoom.get(request.url) != null) {
             roomIdToRoom.get(request.url).removeWs(ws);
-            console.log(roomIdToRoom.get(request.url).wsCount)
+            //console.log(roomIdToRoom.get(request.url).wsCount)
             if (roomIdToRoom.get(request.url).wsCount == 0) {
                 roomIdToRoom.delete(request.url);
             }
@@ -33,6 +33,6 @@ wss.on('connection', function connection(ws, request) {
 
     //ws.send('something');
     console.log("nouveau arrivant");
-
-    console.log(roomIdToRoom);
+    roomIdToRoom.get(request.url).sendOthersWs('{"event":"newConnection"}', ws);
+    //console.log(roomIdToRoom);
 });

@@ -24,11 +24,18 @@ class Room {
         };
         return rivalWs;
     }
+    sendOthersWs(data, myWs) {
+        for (const element of this._wsList) {
+            if (element != myWs) {
+                element.send(data);
+            }
+        };
 
+    }
     sendToAll(data) {
 
         //let index = 0;
-        console.log('WsList =============');
+        //console.log('WsList =============');
         // console.log(this._wsList);
         for (const element of this._wsList) {
             element.send(data);
@@ -44,8 +51,8 @@ class Room {
 
         if (!this._wsList.includes(ws)) {
             this._wsList.push(ws);
-            console.log('Add------WsList =============');
-            console.log(ws);
+            //console.log('Add------WsList =============');
+            //console.log(ws);
         }
 
     }
@@ -56,8 +63,8 @@ class Room {
         if (index > -1) {
             this._wsList.splice(index, 1);
         }
-        console.log('------------//----removeWs-----//---------')
-        console.log(this._wsList);
+        //console.log('------------//----removeWs-----//---------')
+        //console.log(this._wsList);
     }
 }
 
