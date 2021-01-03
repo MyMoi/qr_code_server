@@ -9,10 +9,10 @@ var roomIdToRoom = new Map()
 wss.on('connection', function connection(ws, request) {
 
     ws.on('message', function incoming(message) {
-        //console.log(request.url)
-        //console.log('received: %s', message);
+        console.log(request.url)
+        console.log('received: %s', message);
         roomIdToRoom.get(request.url).sendToAll(message);
-        //ws.send("connecté à : " + request.url)
+
     });
 
     ws.on('close', () => {
@@ -34,5 +34,6 @@ wss.on('connection', function connection(ws, request) {
     //ws.send('something');
     console.log("nouveau arrivant");
     roomIdToRoom.get(request.url).sendOthersWs('{"event":"newConnection"}', ws);
+    ws.send('{"event":"connected"}')
     //console.log(roomIdToRoom);
 });
